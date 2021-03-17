@@ -6,6 +6,7 @@ import {
   GraphQLObjectType,
   GraphQLString,
   GraphQLSchema,
+  GraphQLFloat,
 } from 'graphql';
 import { listings } from './listings';
 
@@ -20,7 +21,7 @@ const Listing = new GraphQLObjectType({
     numOfGuests: { type: GraphQLNonNull(GraphQLInt) },
     numOfBeds: { type: GraphQLNonNull(GraphQLInt) },
     numOfBaths: { type: GraphQLNonNull(GraphQLInt) },
-    rating: { type: GraphQLNonNull(GraphQLInt) },
+    rating: { type: GraphQLNonNull(GraphQLFloat) },
   },
 });
 
