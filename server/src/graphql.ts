@@ -7,6 +7,7 @@ import {
   GraphQLString,
   GraphQLSchema,
 } from 'graphql';
+import { listings } from './listings';
 
 const Listing = new GraphQLObjectType({
   name: 'Listing',
@@ -26,9 +27,11 @@ const Listing = new GraphQLObjectType({
 const query = new GraphQLObjectType({
   name: 'Query',
   fields: {
-    hello: {
-      type: GraphQLList(Listing),
-      resolve: () => 'Hello from the Query!',
+    listings: {
+      type: GraphQLNonNull(GraphQLList(GraphQLNonNull(Listing))),
+      resolve: () => {
+        return listings;
+      },
     },
   },
 });
@@ -36,9 +39,20 @@ const query = new GraphQLObjectType({
 const mutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
-    hello: {
-      type: GraphQLString,
-      resolve: () => 'Hello from the Mutation!',
+    deleteListing: {
+      type: GraphQLNonNull(Listing),
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+      },
+      resolve: (_root, { id }) => {
+        for (let i = 0; i < listings.length; i++) {
+          if (listings[i].id === id) {
+            return listings.splice(i, 1)[0];
+          }
+        }
+
+        throw new Error('Failed to delete listing!');
+      },
     },
   },
 });
