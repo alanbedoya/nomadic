@@ -1,8 +1,9 @@
 import React from 'react';
 import { render } from 'react-dom';
 import reportWebVitals from './reportWebVitals';
+import { Listings } from './sections/Listings';
 
-render(<div>You can do this!!!</div>, document.getElementById('root'));
+render(<Listings />, document.getElementById('root'));
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
