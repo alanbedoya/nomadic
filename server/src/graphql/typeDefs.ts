@@ -6,7 +6,7 @@ export const typeDefs = gql`
     title: String!
     image: String!
     address: String!
-    prince: Int!
+    price: Int!
     numOfGuests: Int!
     numOfBeds: Int!
     numOfBaths: Int!
