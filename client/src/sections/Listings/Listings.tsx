@@ -35,6 +35,8 @@ interface Props {
 }
 
 export const Listings = ({ title }: Props) => {
+  const [listings, setListings] = useState(null);
+
   const fetchListings = async () => {
     const { data } = await server.fetch<ListingsData>({ query: LISTINGS });
     console.log(data);
