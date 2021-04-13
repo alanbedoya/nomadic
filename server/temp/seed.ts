@@ -46,7 +46,6 @@ const seed = async () => {
         numOfBaths: 2,
         rating: 3,
       },
-      // ...
     ];
 
     for (const listing of listings) {
