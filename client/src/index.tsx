@@ -1,10 +1,18 @@
 import React from 'react';
 import { render } from 'react-dom';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import reportWebVitals from './reportWebVitals';
 import { Listings } from './sections/Listings';
 
+const client = new ApolloClient({
+  uri: '/api',
+  cache: new InMemoryCache(),
+});
+
 render(
-  <Listings title='WanderOffice Listings' />,
+  <ApolloProvider client={client}>
+    <Listings title='WanderOffice Listings' />,
+  </ApolloProvider>,
   document.getElementById('root')
 );
 
