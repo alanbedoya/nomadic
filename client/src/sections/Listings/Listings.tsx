@@ -1,4 +1,5 @@
 import React from 'react';
+import { List } from 'antd';
 import { gql, useQuery, useMutation } from '@apollo/client';
 import { Listings as ListingsData } from './__generated__/Listings';
 import {
@@ -50,18 +51,15 @@ export const Listings = ({ title }: Props) => {
   const listings = data ? data.listings : null;
 
   const listingsList = listings ? (
-    <ul>
-      {listings.map((listing) => {
-        return (
-          <li key={listing.id}>
-            {listing.title}
-            <button onClick={() => handleDeleteListing(listing.id)}>
-              Delete
-            </button>
-          </li>
-        );
-      })}
-    </ul>
+    <List
+      itemLayout='horizontal'
+      dataSource={listings}
+      renderItem={(listing) => (
+        <List.Item>
+          <List.Item.Meta title={listing.title} />
+        </List.Item>
+      )}
+    />
   ) : null;
 
   if (loading) {
