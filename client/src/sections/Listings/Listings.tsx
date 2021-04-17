@@ -1,6 +1,7 @@
 import React from 'react';
-import { List, Avatar, Button } from 'antd';
+import { List, Avatar, Button, Spin, Alert } from 'antd';
 import { gql, useQuery, useMutation } from '@apollo/client';
+import { ListingsSkeleton } from './components';
 import { Listings as ListingsData } from './__generated__/Listings';
 import {
   DeleteListing as DeleteListingData,
@@ -77,29 +78,36 @@ export const Listings = ({ title }: Props) => {
   ) : null;
 
   if (loading) {
-    return <h2>Loading...</h2>;
+    return (
+      <div className='listings'>
+        <ListingsSkeleton title={title} />
+      </div>
+    );
   }
 
   if (error) {
     return (
-      <h2>Dang, seems like something went wrong - please try again later.</h2>
+      <div className='listings'>
+        <ListingsSkeleton title={title} error />
+      </div>
     );
   }
 
-  const deleteListingLoadingMessage = deleteListingLoding ? (
-    <h4>Deletion in progress...</h4>
-  ) : null;
-
-  const deleteListingErrorMessage = deleteListingError ? (
-    <h4>Uh oh! Something went wrong with deleting. Please try again.</h4>
+  const deleteListingErrorAlert = deleteListingError ? (
+    <Alert
+      type='error'
+      message='Uh oh! Something went wrong with deleting. Please try again.'
+      className='listings-alert'
+    />
   ) : null;
 
   return (
     <div className='listings'>
-      <h2>{title}</h2>
-      {listingsList}
-      {deleteListingLoadingMessage}
-      {deleteListingErrorMessage}
+      <Spin spinning={deleteListingLoding}>
+        {deleteListingErrorAlert}
+        <h2>{title}</h2>
+        {listingsList}
+      </Spin>
     </div>
   );
 };

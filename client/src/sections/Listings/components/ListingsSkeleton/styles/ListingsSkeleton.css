@@ -1,0 +1,14 @@
+.skeleton-list .ant-divider-horizontal {
+  margin: 12px 0;
+}
+
+.skeleton-list
+  .ant-skeleton-content
+  .ant-skeleton-title
+  + .ant-skeleton-paragraph {
+  margin-top: 12px;
+}
+
+.skeleton-list .skeleton-alert {
+  margin-bottom: 20px;
+}
