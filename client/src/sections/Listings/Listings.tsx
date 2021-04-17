@@ -1,11 +1,12 @@
 import React from 'react';
-import { List } from 'antd';
+import { List, Avatar, Button } from 'antd';
 import { gql, useQuery, useMutation } from '@apollo/client';
 import { Listings as ListingsData } from './__generated__/Listings';
 import {
   DeleteListing as DeleteListingData,
   DeleteListingVariables,
 } from './__generated__/DeleteListing';
+import './styles/Listings.css';
 
 const LISTINGS = gql`
   query Listings {
@@ -55,8 +56,21 @@ export const Listings = ({ title }: Props) => {
       itemLayout='horizontal'
       dataSource={listings}
       renderItem={(listing) => (
-        <List.Item>
-          <List.Item.Meta title={listing.title} />
+        <List.Item
+          actions={[
+            <Button
+              type='ghost'
+              onClick={() => handleDeleteListing(listing.id)}
+            >
+              x
+            </Button>,
+          ]}
+        >
+          <List.Item.Meta
+            title={listing.title}
+            description={listing.address}
+            avatar={<Avatar src={listing.image} shape='square' size={50} />}
+          />
         </List.Item>
       )}
     />
@@ -81,7 +95,7 @@ export const Listings = ({ title }: Props) => {
   ) : null;
 
   return (
-    <div>
+    <div className='listings'>
       <h2>{title}</h2>
       {listingsList}
       {deleteListingLoadingMessage}
