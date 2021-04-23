@@ -13,6 +13,6 @@ export const connectDatabase = async (): Promise<Database> => {
   return {
     bookings: db.collection<Booking>('bookings'),
     listings: db.collection<Listing>('listings'),
-    user: db.collection<User>('users'),
+    users: db.collection<User>('users'),
   };
 };
