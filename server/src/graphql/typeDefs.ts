@@ -9,16 +9,16 @@ export const typeDefs = gql`
     didRequest: Boolean!
   }
 
-  type Query {
-    authUrl: String!
-  }
-
   input LogInInput {
     code: String!
   }
 
+  type Query {
+    authUrl: String!
+  }
+
   type Mutation {
-    logIn:(input: LogInInput) Viewer!
+    logIn(input: LogInInput): Viewer!
     logOut: Viewer!
   }
 `;
