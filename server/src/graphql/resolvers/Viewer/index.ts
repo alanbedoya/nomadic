@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 import { IResolvers } from 'apollo-server-express';
 import { Google } from '../../../lib/api';
-import { Viewer } from '../../../lib/types';
+import { Viewer, Database, User } from '../../../lib/types';
 import { LogInArgs } from '../Viewer/types';
 
 export const viewerResolvers: IResolvers = {
@@ -16,12 +16,32 @@ export const viewerResolvers: IResolvers = {
   },
 
   Mutation: {
-    logIn: async (_root: undefined, { input }: LogInArgs, { db }) => {
+    logIn: async (
+      _root: undefined,
+      { input }: LogInArgs,
+      { db }: { db: Database }
+    ) => {
       try {
         const code = input ? input.code : null;
         const token = crypto.randomBytes(16).toString('hex');
-        const viewer = code ? await logInViaGoogle(code, token, db) : undefined;
-      } catch (error) {}
+        const viewer: User | undefined = code
+          ? await logInViaGoogle(code, token, db)
+          : undefined;
+
+        if (!viewer) {
+          return { didRequest: true };
+        }
+
+        return {
+          _id: viewer._id,
+          token: viewer.token,
+          avatar: viewer.avatar,
+          walletId: viewer.walletId,
+          didRequest: true,
+        };
+      } catch (error) {
+        throw new Error(`Failed to log in: ${error}`);
+      }
     },
     logOut: () => {
       return 'Mutation.logOut';
