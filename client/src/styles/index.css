@@ -205,7 +205,7 @@
 }
 .home {
   padding: 60px 120px;
-  background-image: url(https://www.tinyhouse.app/static/media/map-background.c21df147.jpg-background.c21df147.jpg);
+  background-image: url(../img/worldMap.jpg);
   background-repeat: no-repeat;
   background-position: 10% 0;
 }

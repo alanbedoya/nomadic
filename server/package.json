@@ -1,5 +1,5 @@
 {
-  "name": "wanderoffice-server",
+  "name": "nomadic-server",
   "version": "0.1.0",
   "dependencies": {
     "apollo-server-express": "^2.21.1",
